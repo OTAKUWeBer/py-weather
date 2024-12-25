@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag and Weather</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa; /* Light teal background for the page */
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for the container */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 1.1em;
+            color: #444;
+            font-weight: 500;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 98%;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s;
+            background-color: #f5f8fa; /* Subtle light gray background for the input */
+        }
+        input[type="text"]:focus {
+            border: 2px solid #007bff;
+            background-color: #ffffff;
+        }
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Weather info styles */
+        .weather {
+            margin-top: 20px;
+            background-color: #f8fafb; /* Light gray background for weather info */
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .weather h2 {
+            font-size: 1.8em;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        .weather p {
+            font-size: 1.1em;
+            color: #34495e;
+            margin: 5px 0;
+        }
+        .weather img {
+            margin-top: 15px;
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Error message */
+        .error {
+            color: #e74c3c;
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .weather h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flag and Weather Information</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="country">Enter Country:</label>
+                <input type="text" id="country" name="country" required placeholder="e.g., United States">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if flag_url %}
+        <div class="weather">
+            <h2>Weather in {{ weather_info.city }}</h2>
+            <p><strong>Temperature:</strong> {{ weather_info.temperature }} °C</p>
+            <p><strong>Condition:</strong> {{ weather_info.condition }}</p>
+            <p><strong>Wind Speed:</strong> {{ weather_info.wind_speed }} m/s</p>
+            <p><strong>Cloudiness:</strong> {{ weather_info.cloudiness }}%</p>
+            <img src="{{ flag_url }}" alt="Flag" class="flag">
+        </div>
+        {% else %}
+        <div class="weather">
+            <h2>Weather in {{ weather_info.city }}</h2>
+            <p><strong>Temperature:</strong> {{ weather_info.temperature }} °C</p>
+            <p><strong>Condition:</strong> {{ weather_info.condition }}</p>
+            <p><strong>Wind Speed:</strong> {{ weather_info.wind_speed }} m/s</p>
+            <p><strong>Cloudiness:</strong> {{ weather_info.cloudiness }}%</p>
+            <p><strong>{{ error }}</strong></p>
+        </div>
+        {% endif %}
+        
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
