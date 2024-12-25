@@ -51,8 +51,8 @@ def find_weather(capital):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    weather_info = None  # Initialize a default value for weather_info
-    error = None  # Initialize a default value for error
+    weather_info = None
+    error = None
 
     if request.method == "POST":
         country = request.form["country"]
